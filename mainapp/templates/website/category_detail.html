@@ -1,0 +1,31 @@
+{% extends 'website/base_template.html' %}
+
+{% block content %}
+
+<div class="container px-5 my-5">
+    <div class="row gx-5 justify-content-center">
+        <div class="col-lg-8 col-xl-6">
+            <div class="text-center">
+                <h2 class="fw-bolder">Анкеты категории: {{ category.title|title }} </h2>
+                <p class="lead fw-normal text-muted mb-5">Каждый из них ждет твоего отклика! Связывайся с ними прямо сейчас.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row gx-5">
+        {% for employee in category.employees.all %}
+        <div class="col-lg-4 mb-3">
+             <div class="card mb-3">
+                 <a href="#!"><img class="card-img-top" src="{{ employee.image_user.url }}" alt="..." /></a>
+                 <div class="card-body">
+                     <div class="small text-muted">{{ employee.date_pub }}</div>
+                     <h2 class="card-title h4">{{ employee.first_name }} {{ employee.last_name }}, {{ employee.job }}</h2>
+                     <p class="card-text">{{ employee.description }}</p>
+                     <a class="btn btn-primary" href="{{ employee.get_absolute_url }}">Подробнее →</a>
+                 </div>
+             </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

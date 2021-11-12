@@ -1,0 +1,50 @@
+{% extends 'website/base_template.html' %}
+
+{% block content %}
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <section id="scroll">
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center">
+                <div class="col-lg-6 order-lg-2">
+                    <div class="p-5"><img class="img-fluid rounded-circle" src="{{ users.image_user.url }}" alt="..." /></div>
+                </div>
+                <div class="col-lg-6 order-lg-5">
+                    <div class="p-5">
+                        <h2 class="display-4">{{ users.first_name|title }} {{ users.last_name|title }}, {{ users.age }} лет</h2>
+                        <h2 class="mb-5">{{ users.city|title }}, {{ users.country|title }}</h2>
+                        <h2 class='mb-3'>Контакты:</h2>
+                        <li>Email: {{ users.email }}</li>
+                        <li class="mb-5">Номер телефона: {{ users.phone }}</li>
+                        {% if request.user.username == users.username %}
+                        <a class="btn btn-primary btn-lg px-4 me-sm-3" href="{{ users.get_update_url }}">Изменить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center">
+                <div class="p-5">
+                    <h2 class="display-4"><center>Описание:</center></h2>
+                    <p><center>{{ users.description }}</center></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    </body>
+</html>
+
+
+
+{% endblock %}

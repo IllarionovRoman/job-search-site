@@ -1,0 +1,110 @@
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>jobproject</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <body>
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'base' %} ">jobproject</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        {% if not request.user.is_authenticated %}
+                        <li class="nav-toggler-icon">
+                    <a class="nav-link active" aria-current="page" href="{% url 'login_url' %}">Авторизация</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'registration_url' %}">Регистрация</a>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'employees_list_url' %}">Главная</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'employees_list_url' %}#p1">Найти сотрудника/компанию</a></li>
+
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ request.user.get_absolute_url }}">Здравствуйте {{ request.user }}</a>
+
+                </li>
+                <li class="nav-item">
+                     <li class="nav-item"><a class="nav-link" href="{% url 'employees_list_url' %}">Главная</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ request.user.get_absolute_url }}">Мой профиль</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ request.user.get_support_url }}">Поддержка</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'employee_create_url' %}">Создать анкету</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'employees_list_url' %}#p1">Найти сотрудника/компанию</a></li>
+                        <i class="bi bi-envelope">
+                        </i>
+                        <a class="nav-link active" aria-current='page' href="{% url 'logout_url' %}">Выйти</a>
+                {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% block content %}
+        <!-- Header - set the background image for the header in the line below-->
+        <header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/u-n1AFjUclo/2000x800')">
+            <div class="text-center my-5">
+                <h1 class="text-light fs-3 fw-bolder">Здесь ты найдешь себе подходящего сотрудника!</h1>
+                <p class="text-white-50 mb-0">jobproject 2021</p>
+                <center>
+                <a class="btn btn btn-secondary btn-lg px-4"  style="margin: 20px" href="{% url 'employees_list_url' %}">Искать!</a>
+                </center>
+            </div>
+        </header>
+        <!-- Content section-->
+
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>jobproject</h2>
+                        <p class="lead">Сайт по поиску работников. Здесь ты найдешь любого сотрудника на свой вкус. Быстрый и удобный поиск!</p>
+                        <p class="mb-0">Находить работников можете по специальной категории, а также по должности, которую указал сам работник. Если понравился кандидат, то на его анкете будут указаны его данные, а также можете ему написать личное сообщение!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Image element - set the background image for the header in the line below-->
+        <div class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/YbOGL8o1Yz8/1600x500')">
+            <!-- Put anything you want here! The spacer below with inline CSS is just for demo purposes!-->
+            <div style="height: 20rem"></div>
+        </div>
+        <!-- Content section-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>jobproject</h2>
+                        <p class="lead">Наш сайт постоянно развивается и ищет новые идеи для своего улучшения</p>
+                        <p class="mb-0">Если у тебя возникла проблема, или ты имеешь какие-то идеи, то смело пиши в поддержку! Отвечаем всем</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endblock %}
+        <!-- Footer-->
+        {% if request.user.is_authenticated and request.user.is_staff %}
+        <div class="admin-panel align-items-center">
+            <a href="/admin" class="btn btn-outline-info">Администратор</a>
+            {% block admin-panel %}{% endblock %}
+        </div>
+        {% endif %}
+
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; jobproject 2021-2021</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>

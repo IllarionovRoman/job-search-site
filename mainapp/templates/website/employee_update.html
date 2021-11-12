@@ -1,0 +1,23 @@
+{% extends 'website/base_template.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="row" style="margin-bottom: 200px; margin-top: 160px;">
+    <div class="col-md-6 offset-md-3">
+        <h3 class="text-center">Редактирование анкеты</h3>
+        <hr>
+        <form action="{{ employee.get_update_url }}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" class="btn btn-success btn-block" value="Редактировать анкету">
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block admin-panel %}
+<a href="{% url 'employee_create_url' %}" class="btn btn-light">Создать заявку</a>
+<a href="{% url 'category_create_url' %}" class="btn btn-light">Создать категорию</a>
+<a href="{{ admin_object.get_update_url }}" class="btn btn-light edit" style=
+        "{% if detail %}display: block;{% endif %}">Редактировать</a>
+<a href="{{ admin_object.get_delete_url }}" class="btn btn-danger delete" style=
+        "{% if detail %}display: block;{% endif %}">Удалить</a>
+{% endblock %}

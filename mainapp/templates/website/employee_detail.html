@@ -1,0 +1,146 @@
+{% extends 'website/base_template.html' %}
+{% load mathfilters %}
+
+{% block title %}
+    {{ employee.id }}
+{% endblock %}
+
+
+{% block content %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Modern Business - Start Bootstrap Template</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body class="d-flex flex-column h-100">
+        <main class="flex-shrink-0">
+            <!-- Navigation-->
+            <!-- Header-->
+            <header class="bg-dark py-5">
+                <div class="container px-5">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-8 col-xl-7 col-xxl-6">
+                            <div class="my-5 text-center text-xl-start">
+                                <h1 class="display-5 fw-bolder text-white mb-2">{{ employees.first_name }} {{ employees.last_name }} , {{ employees.age }} лет
+                                </h1>
+                                <p class="lead fw-normal text-white-50 mb-2">{{ employees.job }}</p>
+                                <p class="lead fw-normal text-white-50 mb-4">{{ employees.city }}, {{ employees.country }}</p>
+                                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                                    <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Контакты</a>
+                                    <a class="btn btn-outline-light btn-lg px-4" href="#">Написать</a>
+                                    <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#description">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="{{ employees.image_user.url }}" alt="..." style="weight:700px; height:350px;" /></div>
+                    </div>
+                </div>
+            </header>
+            <!-- Features section-->
+            <section class="py-5" id="features">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5">
+                        <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">Понравился человек? Тогда бегом связывайся с ним! Его контакты:</h2></div>
+                        <div class="col-lg-8">
+                            <div class="row gx-5 row-cols-1 row-cols-md-2">
+                                <div class="col mb-5 h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
+                                    <h2 class="h5">Почта:</h2>
+                                    <p class="mb-0">{{ employees.email }}</p>
+                                </div>
+                                <div class="col mb-5 h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
+                                    <h2 class="h5">Телефон:</h2>
+                                    <p class="mb-0">{{ employees.phone }}</p>
+                                </div>
+                            </div>
+                            <div class="row gx-5 row-cols-1" id="description">
+                                    <div class="col h-100">
+                                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
+                                        <center class="h5"> Так же можешь написать ему личное сообщение:</center>
+                                        <center>
+                                        <a class='btn btn-secondary btn-lg-500 btn-block' href="/">Написать</a></center>
+                                        <p class="mb-0">
+                                        </p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Testimonial section-->
+            <div class="py-5 bg-light">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-10 col-xl-7">
+                            <div class="text-center">
+                                <div class="fs-4 mb-4 fst-italic">{{ employees.description }}</div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <img class="rounded-circle me-3" src="{{ employees.image_user.url }}" alt="..." style="weight:35px; height:30px;"/>
+                                    <div class="fw-bold">
+                                        {{ employees.last_name }} {{ employees.first_name }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Blog preview section-->
+            <section class="py-5">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-8 col-xl-6">
+                            <div class="text-center">
+                                <h2 class="fw-bolder">Похожие работники {{ employees.categories }}</h2>
+                                <p class="lead fw-normal text-muted mb-5">Каждый из них ждет твоего отклика! Связывайся с ними прямо сейчас.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gx-5">
+                        {% for employee in employees_recommendation %}
+                        {% if forloop.counter <= 3 %}
+                        {{ employees.categories.title }}
+                        <div class="col-lg-4 mb-5">
+                            <div class="card mb-4">
+                                <a href="#!"><img class="card-img-top" src="{{ employee.image_user.url }}" alt="..."/></a>
+                                <div class="card-body">
+                                    <div class="small text-muted">{{ employee.date_pub }}</div>
+                                    <h2 class="card-title h4">{{ employee.first_name }} {{ employee.last_name }}, {{ employee.job }}</h2>
+                                    <p class="card-text">{{ employee.description }}</p>
+                                    <a class="btn btn-primary" href="{{ employee.get_absolute_url }}">Подробнее →</a>
+                                </div>
+                                     <div class="card-footer text-muted">
+                                    Категория:
+                                    {% for category in employee.categories.all %}
+                                    <a href="{{ category.get_absolute_url }}">{{ category.title }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endif %}
+                        {% endfor %}
+
+                    </div>
+                    <!-- Call to action-->
+                </div>
+            </section>
+        </main>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
+{% endblock %}

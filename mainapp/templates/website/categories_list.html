@@ -1,0 +1,12 @@
+{% extends 'website/base_template.html' %}
+
+{% block title %}
+Categories - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-5">Категории:</h1>
+{% for category in categories %}
+<h3><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></h3>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'website/base_template.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+
+{% block content %}
+<form action="{{ employee.get_delete_url }}" method="post">
+    {% csrf_token %}
+    <h3>Вы точно хотите удалить анкету?</h3>
+    <a href="{{ employees.get_absolute_url }}">Отмена</a>
+    <button type="submit" name="button" class="btn btn-danger">Удалить</button>
+</form>
+{% endblock %}

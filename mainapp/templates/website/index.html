@@ -1,0 +1,104 @@
+{% extends 'website/base_template.html' %}
+
+{% block title %}
+123
+{% endblock %}
+
+
+{% block content %}
+<header class="py-5 bg-light border-bottom mb-4">
+            <div class="container">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder">Добро пожаловать!</h1>
+                    <p class="lead mb-0">Находи себе сотрудника прямо сейчай!</p>
+                </div>
+            </div>
+        </header>
+        <!-- Page content-->
+
+        <div class="container">
+            <div class="row">
+                <!-- Blog entries-->
+                <div class="col-lg-8">
+                    <!-- Featured blog post-->
+
+                    <!-- Nested row for non-featured blog posts-->
+
+                    <div class="row">
+                        {% for employee in page_object.object_list %}
+                        <div class="col-lg-6">
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <a href="#!"><img class="card-img-top" src="{{ employee.image_user.url }}" alt="..." /></a>
+                                <div class="card-body">
+                                    <div class="small text-muted">{{ employee.date_pub }}</div>
+                                    <h2 class="card-title h4">{{ employee.first_name }} {{ employee.last_name }}, {{ employee.job }}</h2>
+                                    <p class="card-text">{{ employee.description }}</p>
+                                    <a class="btn btn-primary" href="{{ employee.get_absolute_url }}">Подробнее →</a>
+                                </div>
+                                     <div class="card-footer text-muted">
+                                    Категория:
+                                    {% for category in employee.categories.all %}
+                                    <a href="{{ category.get_absolute_url }}">{{ category.title }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Pagination-->
+                    {% if is_paginated %}
+                    <nav aria-label="Pagination">
+                        <hr class="my-0" />
+                        <ul class="pagination justify-content-center my-4">
+                            <li class="page-item {% if not prev_url %} disabled {% endif %}"><a class="page-link" href="{{ prev_url }}" tabindex="-1" aria-disabled="true">Назад</a></li>
+                            {% for n in page_object.paginator.page_range %}
+                            {% if page_object.number == n %}
+                            <li class="page-item active" aria-current="page"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+                            {% elif n > page_object.number|add:-3 and n < page_object.number|add:3 %}
+                            <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            <li class="page-item {% if not next_url %} disabled {% endif %}"><a class="page-link" href="{{ next_url }}" tabindex="-1" aria-disabled="true">Следующее</a></li>
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- Search widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Найти работника:</div>
+                        <div class="card-body">
+                            <form class="input-group" action="{% url 'employees_list_url' %}">
+                                <input class="form-control" id='p1' type="text" placeholder="Введите специализацию работы..." aria-label="Enter search term..." aria-describedby="button-search" name="search" />
+                                <button class="btn btn-primary" id="button-search" type="button" aria-describedby="button-search" name="search">Найти</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Categories widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Категории:</div>
+                        <div class="card-body">
+                            <div class="row">
+                                {% for category in category_base %}
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+                                    </ul>
+                                </div>
+                                 {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Side widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Помощь</div>
+                        <div class="card-body">Если нужна помощь, пишите в службу поддержки и вам обязательно помогут!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
